@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 191fb12585a379041910242704f15f57
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - gameMusic: {fileID: 8300000, guid: 862004a593a8eca4eb584eba9c87de62, type: 3}
+  - menuMusic: {fileID: 8300000, guid: 0c7bf18089d5b2149ae6fc8c893d495c, type: 3}
+  - gameOverMusic: {fileID: 8300000, guid: 46a769e93fc0b1547b467e1504a70cc7, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
