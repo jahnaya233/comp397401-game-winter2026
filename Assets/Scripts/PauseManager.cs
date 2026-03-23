@@ -1,6 +1,20 @@
+/*
+ *File name: PauseManager.cs
+ *Author: Jahnaya Brooks
+ *Student Number: 301359779
+ *Data Last Modified: 2026/03/23
+ *Description:
+ *Controls the pause functions
+ *Revision History:
+ *1.0 Pause menu
+ *1.1 Debugging music code
+ */
+
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+//Manages the pause menu and gave over functions
 public class PauseManager : MonoBehaviour
 {
 
@@ -12,6 +26,7 @@ public class PauseManager : MonoBehaviour
 
     private bool isPaused = false;
 
+    //escape calls paused screen
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -22,6 +37,7 @@ public class PauseManager : MonoBehaviour
                 Pause();
         }
     }
+    //pauses game
     public void Pause()
     {
         pausePanel.SetActive(true);
@@ -30,7 +46,7 @@ public class PauseManager : MonoBehaviour
 
 
     }
-
+//resumes the game
     public void Resume()
     {
         pausePanel.SetActive(false);
@@ -40,14 +56,14 @@ public class PauseManager : MonoBehaviour
 
 
     }
-
+    //calls options scene
     public void LoadOptions()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("OptionsScene");
     }
 
-
+    //Triggers game over and the music
     public void GameOver()
     {
 
@@ -58,7 +74,7 @@ public class PauseManager : MonoBehaviour
         gameOverMusic.Play();
       
     }
-
+    //closes game
     public void QuitGame()
     {
         Debug.Log("Quiting...");
@@ -71,14 +87,14 @@ public class PauseManager : MonoBehaviour
 #endif
     }
 
-
+//restarts game
 public void RestartGame()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
     }
-
+    //returns to menu
     public void GoToMenu()
     {
         Time.timeScale = 1f;
