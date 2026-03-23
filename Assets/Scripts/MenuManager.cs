@@ -3,8 +3,11 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-   public void PlayGame()
+    public AudioSource menuMusic;
+
+    public void PlayGame()
     {
+        menuMusic.Stop();
         SceneManager.LoadScene("GameScene");
     }
 

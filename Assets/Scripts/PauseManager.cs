@@ -5,6 +5,7 @@ public class PauseManager : MonoBehaviour
 {
 
     public AudioSource gameOverMusic;
+
     public GameObject pausePanel;
     public GameObject gameOverPanel;
     public bool isGameOver;
@@ -49,11 +50,12 @@ public class PauseManager : MonoBehaviour
 
     public void GameOver()
     {
+
         isGameOver = true;
         gameOverPanel.SetActive(true);
         Time.timeScale = 0f;
-
-        //   MusicManager.instance.PlayGameOverMusic();
+        gameOverMusic.Play();
+      
     }
 
     public void QuitGame()

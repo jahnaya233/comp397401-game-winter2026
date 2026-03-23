@@ -19,4 +19,12 @@ public class EnemyAI : MonoBehaviour
                 );
         }
     }
+
+     void OnTriggerEnter(Collider other)
+    {
+      if(other.CompareTag("Player"))
+        {
+           other.GetComponent<PlayerMovement>().TakeDamage();
+        }
+    }
 }
