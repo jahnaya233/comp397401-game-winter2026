@@ -13,7 +13,7 @@ using UnityEngine;
 
 //Serializable class for saving game
 [System.Serializable]
-public class SaveData : MonoBehaviour
+public class SaveData
 {
     //data saved
     public float playerX;
