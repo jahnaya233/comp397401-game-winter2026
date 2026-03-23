@@ -51,7 +51,8 @@ public class PauseManager : MonoBehaviour
     public void GameOver()
     {
 
-        isGameOver = true;
+
+       isGameOver = true;
         gameOverPanel.SetActive(true);
         Time.timeScale = 0f;
         gameOverMusic.Play();
