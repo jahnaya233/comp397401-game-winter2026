@@ -15,20 +15,25 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using JetBrains.Annotations;
 //Handles the player movement, jumping, and health
 public class PlayerMovement : MonoBehaviour
 {
-   
-    public float speed = 20f;//moving speed
+
+    public float speed = 9f;//moving speed
     private Rigidbody rb;
-    public float jumpForce = 5f;//jump strength
+    public float jumpForce = 20f;//jump strength
     private bool isGrounded;
+
+    private float moveX = 0f;
+    private float moveZ = 0f;
 
     public AudioSource audioSource;
     public AudioClip jumpSound;
     public GameObject gameOverPanel;
 
     private bool isGameOver = false;
+
     public int health = 3;
     private bool canTakeDamage = true;
     public float damageCooldown = 1f;
@@ -43,46 +48,89 @@ public class PlayerMovement : MonoBehaviour
         livesText.text = "Lives: " + health;
     }
 
-     void FixedUpdate()
+    void FixedUpdate()
     {
 
-        float moveX = Input.GetAxis("Horizontal");
-        float moveZ = Input.GetAxis("Vertical");
-        //Normalize the movement to prevent faster speed going diagonally
-        Vector3 movement = new Vector3(moveX, 0.0f, moveZ).normalized;
+        //float moveX = Input.GetAxis("Horizontal");
+        //float moveZ = Input.GetAxis("Vertical");
+        ////Normalize the movement to prevent faster speed going diagonally
+        //Vector3 movement = new Vector3(moveX, 0.0f, moveZ).normalized;
 
-        //Apply movement force
-        rb.AddForce(movement * speed, ForceMode.Acceleration);
+        ////Apply movement force
+        //rb.AddForce(movement * speed, ForceMode.Acceleration);
 
-        Vector3 velocity = rb.linearVelocity;
-        Vector3 horizontal = new Vector3(velocity.x, 0, velocity.z);
+        //Vector3 velocity = rb.linearVelocity;
+        //Vector3 horizontal = new Vector3(velocity.x, 0, velocity.z);
 
-        Vector3 target = movement * speed;
+        //Vector3 target = movement * speed;
 
-        rb.linearVelocity = Vector3.Lerp(horizontal, target, 0.2f) + Vector3.up * velocity.y;
+        //rb.linearVelocity = Vector3.Lerp(horizontal, target, 0.2f) + Vector3.up * velocity.y;
 
-
+        Vector3 movement = new Vector3(moveX, 0f, moveZ).normalized;
+        rb.AddForce(movement * speed);
     }
 
-     void Update()
+    void Update()
     {
         //Jump input
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-                {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            audioSource.PlayOneShot(jumpSound);
+        //if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        //{
+        //    rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        //    audioSource.PlayOneShot(jumpSound);
+        //}
+        ////Fall of map check and calls gameover panel
+        //if (transform.position.y < -5f && !isGameOver)
+        //{
+        //    isGameOver = true;
+        //    FindAnyObjectByType<PauseManager>().GameOver();
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Jump();
         }
-        //Fall of map check and calls gameover panel
-        if (transform.position.y<-5f && !isGameOver)
+        if (transform.position.y < -5f && !isGameOver)
         {
             isGameOver = true;
             FindAnyObjectByType<PauseManager>().GameOver();
-        }
+        } }
         
-          
-      
-    }
+            public void MoveLeftDown()
+        {
+            moveX = -1f;
+        }
+            
+            public void MoveRightDown()
+            {
+                moveX = 1f;
+            }
 
+            public void MoveUpDown()
+            {
+                moveZ = 1f;
+            }
+
+            public void MoveDownDown()
+            {
+            moveZ -= 1f;
+            }
+            public void StopHorizontal()
+            {
+                moveX = 0f;
+            }
+
+            public void StopVertical()
+            {
+                moveZ = 0f;
+            }
+            public void Jump()
+            {
+                if(isGrounded)
+                {
+                    rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                    audioSource.PlayOneShot(jumpSound);
+                }
+            }
+        
+  
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))

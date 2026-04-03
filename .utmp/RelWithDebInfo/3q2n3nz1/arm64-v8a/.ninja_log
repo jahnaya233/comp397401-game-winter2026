@@ -1,0 +1,10 @@
+# ninja log v5
+399	3741	7969170976483119	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	3bbbaa2d7167e18b
+700	3765	7969170976724327	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	590f373e420ce73
+3	3801	7969170977152593	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	f27ecdf0d32393df
+1037	3975	7969170978942058	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	f1e17114817491a4
+1256	4237	7969170981268374	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	a4af8729c72fede5
+1211	4556	7969170984705385	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	10905a63927b96b5
+838	4715	7969170986199284	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	40d1136ca03ce36b
+166	4869	7969170987746394	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	fe6bd6c7692920c9
+4870	5159	7969170990567931	C:/Users/jahna/Desktop/Web Game Programming/CoinCollect/comp397401-game-winter2026/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/3q2n3nz1/obj/arm64-v8a/libgame.so	499aaf4dcd77571

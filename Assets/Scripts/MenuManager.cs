@@ -26,6 +26,13 @@ public class MenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("OptionsScene");
     }
+
+    //Loading
+    public void LoadGameFromMenu()
+    {
+        FindObjectOfType<SaveManager>().LoadGame();
+        SceneManager.LoadScene("GameScene");
+    }
     //closes game
     public void QuitGame()
     {

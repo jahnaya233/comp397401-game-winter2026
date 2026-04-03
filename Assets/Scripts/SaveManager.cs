@@ -12,73 +12,116 @@
  */
 using UnityEngine;
 using System.IO;
-
+using UnityEngine.SceneManagement;
 //Manages saving and loading of the game data by saving the position of the player, the health and the score
 public class SaveManager : MonoBehaviour
 {
-    public Transform player; 
-    public PlayerMovement playerMovement;
-    public GameManager gameManager;
 
-   
+    private Transform player;
+    private PlayerMovement playerMovement;
+    private GameManager gameManager;
     string savePath;
+    private Rigidbody rb;
 
     void Start()
     {
-        savePath = Application.persistentDataPath + "/savegame.json";
+      
     }
 
-     void Update()
+    void Update()
     {
         if (Input.GetKeyUp(KeyCode.K))  //k to save
-            {
-                SaveGame();
+        {
+            SaveGame();
 
-            }
+        }
 
-            if (Input.GetKeyUp(KeyCode.L))//Load
-            {
-                LoadGame();
-            }
+        if (Input.GetKeyUp(KeyCode.L))//Load
+        {
+            LoadGame();
+        }
     }
     //Saves the current game state
-        public void SaveGame()
+    public void SaveGame()
+    {
+        GameObject playerObj = GameObject.FindWithTag("Player");
+
+        if (playerObj == null)
         {
-        //create a new save data object
-
-            SaveData data = new SaveData();
-
-        //store the player's position
-            data.playerX = player.position.x;
-            data.playerY = player.position.y;
-            data.playerZ = player.position.z;
-
-            data.health = playerMovement.health;
-            data.score = gameManager.score;
-        //Convert to JSON
-            string json = JsonUtility.ToJson(data, true);
-        //Write JSON to file
-            File.WriteAllText(savePath, json);
-
-            Debug.Log("Game Saved to: " + savePath);
+            Debug.Log("player not found");
+            return;
         }
+        player = playerObj.transform;
+        playerMovement = player.GetComponent<PlayerMovement>();
+        gameManager = FindAnyObjectByType<GameManager>();
+
+        SaveData data = new SaveData();
+
+        data.playerX = playerObj.transform.position.x;
+        data.playerY = playerObj.transform.position.y;
+        data.playerZ = playerObj.transform.position.z;
+
+        data.health = playerMovement.health;
+        data.score = gameManager.score;
+
+        string json = JsonUtility.ToJson(data, true);
+        File.WriteAllText(savePath, json);
+
+        Debug.Log("Game saved");
+    }
     //Loads the saved game state from the file, then restoring player data
-        public void LoadGame()
+    public void LoadGame()
+    {
+        Debug.Log("Loading game");
+        if (!File.Exists(savePath))
         {
-            if (!File.Exists(savePath))
-            {
-                Debug.Log("Save file not found");
-                return;
-            }
-
-            string json = File.ReadAllText(savePath);
-            SaveData data = JsonUtility.FromJson<SaveData>(json);
-
-            player.position = new Vector3(data.playerX, data.playerY, data.playerZ);
-
-            playerMovement.health = data.health;
-            gameManager.score = data.score;
-
-            Debug.Log("Game Loaded");
+            Debug.Log("Save file not found");
+            return;
         }
+
+        Debug.Log("Loading game");
+
+        GameObject playerObj = GameObject.FindWithTag("Player");
+
+        if (playerObj == null)
+        {
+            Debug.LogError("player not found");
+            return;
+        }
+        player = playerObj.transform;
+        playerMovement = playerObj.GetComponent<PlayerMovement>();
+        gameManager = FindAnyObjectByType<GameManager>();
+
+
+        string json = File.ReadAllText(savePath);
+        SaveData data = JsonUtility.FromJson<SaveData>(json);
+
+        player.position = new Vector3(data.playerX, data.playerY, data.playerZ);
+
+        playerMovement.health = data.health;
+        playerMovement.livesText.text = "Lives: " + data.health;
+        gameManager.score = data.score;
+
+        Debug.Log("Game Loaded");
+    }
+
+    public void LoadGameFromMenu()
+    {
+        Debug.Log("Load button pressed");
+        if (!File.Exists(savePath))
+        {
+            Debug.Log("No save file found");
+            return;
+        }
+
+        SceneManager.LoadScene("GameScene");
+
+        Invoke(nameof(LoadGame), 1f);
+    } 
+    void Awake()
+    {
+        savePath = Application.persistentDataPath + "/savegame.json";
+
+        DontDestroyOnLoad(gameObject);
+     }
 }
