@@ -10,12 +10,20 @@
  */
 using UnityEngine;
 
-public class EnemyFactory : GameObjectFactory
+public class EnemyFactory 
 {
     public GameObject enemyPrefab;
+    public ObjectPool pool;
 
-    public override GameObject CreateObject(Vector3 position)
+    public virtual GameObject CreateObject(Vector3 position)
     {
-        return GameObject.Instantiate(enemyPrefab, position, Quaternion.identity);   
-            }
+        GameObject enemy = pool.GetObject();
+
+        if(enemy != null)
+        {
+            enemy.transform.position = position;
+            enemy.transform.rotation = Quaternion.identity;
+        }
+        return enemy;
+    }
 }

@@ -14,16 +14,21 @@ using UnityEngine;
 public class Coin : MonoBehaviour
 {
     public AudioClip collectSound;
+    bool collected = false;
 
     private void OnTriggerEnter(Collider other)
     {
+        if (collected) return;
+
         if (other.CompareTag("Player"))
 
         {
+            collected = true;
             //Sound plays when collected
             AudioSource.PlayClipAtPoint(collectSound, transform.position);
             GameManager.instance.CollectCoin();
             //Coin disappears when collection
+            FindAnyObjectByType<InventoryManager>().AddCoins(10);
             Destroy(gameObject);
         }
     }

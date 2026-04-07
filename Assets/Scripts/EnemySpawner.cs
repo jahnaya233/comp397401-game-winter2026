@@ -16,11 +16,13 @@ public class EnemySpawner : MonoBehaviour
     public int numOfEnemies = 7;
 
     public EnemyFactory enemyFactory;
-
+    public ObjectPool pool;
     void Start()
     {
         enemyFactory = new EnemyFactory();
+
         enemyFactory.enemyPrefab = enemyPrefab;
+        enemyFactory.pool = pool;
 
         SpawnEnemies();
 

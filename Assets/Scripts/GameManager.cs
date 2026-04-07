@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
     {
         collectedCoins++;
 
-        score += 10;
+        FindAnyObjectByType<InventoryManager>().AddCoins(10);
         scoreText.text = "Score: " + score;
 
         if (collectedCoins >= totalCoins)

@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     public float jumpForce = 20f;//jump strength
     private bool isGrounded;
+    private float timeAlive = 0f;
 
     private float moveX = 0f;
     private float moveZ = 0f;
@@ -83,10 +84,14 @@ public class PlayerMovement : MonoBehaviour
         //{
         //    isGameOver = true;
         //    FindAnyObjectByType<PauseManager>().GameOver();
+       timeAlive += Time.deltaTime;
+        FindAnyObjectByType<AchievementManager>().CheckSurvival(timeAlive);
+        
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Jump();
         }
+        //Fall check
         if (transform.position.y < -5f && !isGameOver)
         {
             isGameOver = true;
