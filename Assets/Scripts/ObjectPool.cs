@@ -2,7 +2,7 @@
  *File name: ObjectPool.cs
  *Author: Jahnaya Brooks
  *Student Number: 301359779
- *Data Last Modified: 2026/04/06
+ *Data Last Modified: 2026/04/26
  *Description:
  *Creates multiple game enemy objects
  *Revision History:
@@ -29,20 +29,24 @@ public class ObjectPool : MonoBehaviour
         }
     }
 
-    public GameObject GetObject()
+    public GameObject GetObject(Vector3 position)
     {
         foreach(GameObject obj in pool)
         {
             if (!obj.activeInHierarchy)
             {
+                obj.transform.position = position;
                 obj.SetActive(true);
                 return obj;
             }
         }
-        GameObject newObj = Instantiate(prefab);
-        newObj.SetActive(true);
+        GameObject newObj = Instantiate(prefab, position, Quaternion.identity);
         pool.Add(newObj);
-
         return newObj;
     }
+
+    public void ReturnObject(GameObject obj)
+    {
+        obj.SetActive(false );
+    }    
 }

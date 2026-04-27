@@ -17,13 +17,13 @@ public class EnemyFactory
 
     public virtual GameObject CreateObject(Vector3 position)
     {
-        GameObject enemy = pool.GetObject();
+        GameObject obj = pool.GetObject(position);
 
-        if(enemy != null)
+        if(obj != null)
         {
-            enemy.transform.position = position;
-            enemy.transform.rotation = Quaternion.identity;
+            obj.transform.position = position;
+            obj.transform.rotation = Quaternion.identity;
         }
-        return enemy;
+        return obj;
     }
 }

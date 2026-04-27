@@ -13,10 +13,16 @@ using UnityEngine;
 //Coin pickup beahavior 
 public class Coin : MonoBehaviour
 {
-    public AudioClip collectSound;
-    bool collected = false;
 
-    private void OnTriggerEnter(Collider other)
+    private bool collected = false;
+    public AudioClip collectSound;
+
+     void OnEnable()
+    {
+        collected = false;  
+    }
+
+     void OnTriggerEnter(Collider other)
     {
         if (collected) return;
 
@@ -29,6 +35,7 @@ public class Coin : MonoBehaviour
             GameManager.instance.CollectCoin();
             //Coin disappears when collection
             FindAnyObjectByType<InventoryManager>().AddCoins(10);
+            FindAnyObjectByType<ObjectPool>().ReturnObject(gameObject);
             Destroy(gameObject);
         }
     }
